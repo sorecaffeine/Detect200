@@ -1,18 +1,19 @@
-import httpx
+import tomllib
 
-url ="https://github.com"  # prpbaly use a json too parse list of website too checl
+from checker import chk_services
+from database import get_connect, insert_chk
 
-try:
-    reply=httpx.get(url,timeout=5.0)
+connection=get_connect()
+print("Connected to Sqlite")
+connection.close()
 
-    print("URL:",url)
-    print("HTTP status:",reply.status_code)
 
-    if reply.status_code < 400:
-        print("Status:up")
-    else:
-        print("status:DOWN")
+with open("services.toml","rb") as file:
+    config=tomllib.load(file)
+services=config["services"]
 
-except httpx.RequestError as error:
-    print("Status:DOWn")
-    print("ERROR",error)
+for service in services:
+    print("checking:",service["name"])
+    result=chk_services(service)
+    print(result)
+    insert_chk(result)
