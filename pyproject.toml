@@ -1,19 +1,13 @@
 [project]
 name = "downdetector"
 version = "0.1.0"
-description = "Add your description here"
+description = "Simple service availability monitor"
 readme = "README.md"
-authors = [
-    { name = "sorecaffeine", email = "shahhaleim@gmail.com" }
-]
 requires-python = ">=3.12"
 dependencies = [
     "httpx>=0.28.1",
+    "fastapi[standard]",
 ]
 
-[project.scripts]
-downdetector = "downdetector:main"
-
-[build-system]
-requires = ["uv_build>=0.12.17,<0.13.0"]
-build-backend = "uv_build"
+[tool.uv]
+package = false

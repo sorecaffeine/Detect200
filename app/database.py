@@ -1,5 +1,13 @@
 import sqlite3
 
+def init_db():
+    connection = get_connect()
+
+    with open("db/schema.sql", "r") as file:
+        schema = file.read()
+
+    connection.executescript(schema)
+    connection.close()
 def get_connect():
     return sqlite3.connect("data/checks.db")
 
